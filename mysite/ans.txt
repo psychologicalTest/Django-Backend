@@ -1,0 +1,25 @@
+i = 0
+j = 0
+b = 0
+file = 0
+while file < 5:
+	j = 0
+	if file == 0:
+		json_data=json.load(codecs.open('love.json', 'r', 'utf-8-sig'))
+	elif file == 1:
+		json_data=json.load(codecs.open('money.json', 'r', 'utf-8-sig'))
+	elif file == 2:
+		json_data=json.load(codecs.open('interest.json', 'r', 'utf-8-sig'))
+	elif file == 3:
+		json_data=json.load(codecs.open('future.json', 'r', 'utf-8-sig'))
+	else :
+		json_data=json.load(codecs.open('characteristic.json', 'r', 'utf-8-sig'))
+	while j < len(json_data):
+		i = 0
+		while i < len(json_data[j]['answers']):
+			ans = Answer(answer=json_data[j]['answers'][i]['context'],main_question_id= b+j+1)
+			ans.save()
+			i = i+1
+		j = j+1
+	b = b+j
+	file = file+1

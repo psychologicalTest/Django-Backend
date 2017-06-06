@@ -1,0 +1,17 @@
+file = 0
+while file < 5:
+	j = 0
+	if file == 0:
+		json_data=json.load(codecs.open('love.json', 'r', 'utf-8-sig'))
+	elif file == 1:
+		json_data=json.load(codecs.open('money.json', 'r', 'utf-8-sig'))
+	elif file == 2:
+		json_data=json.load(codecs.open('interest.json', 'r', 'utf-8-sig'))
+	elif file == 3:
+		json_data=json.load(codecs.open('future.json', 'r', 'utf-8-sig'))
+	else :
+		json_data=json.load(codecs.open('characteristic.json', 'r', 'utf-8-sig'))
+	for element1 in json_data:
+		main_question = Main_question(classification=element1['type'], main_quest=element1['title'])
+		main_question.save()
+	file = file+1
