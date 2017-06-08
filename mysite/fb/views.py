@@ -3,16 +3,11 @@ from django.http import HttpResponse
 import psycopg2
 import random
 import json
-#from .models import Question
-# ...
+
 def fn(request):
-    #question = get_object_or_404(Question, pk=question_id)
 
-
-
-    conn = psycopg2.connect("dbname='postgres' host='localhost' port='5432'user='postgres' password='david0307'")
+    conn = psycopg2.connect("dbname='' host='' port='' user='' password=''")
     cursor = conn.cursor()
-
     classification = str(request.GET.get('q',''))
 
     if classification =='love':
@@ -21,22 +16,19 @@ def fn(request):
         id = random.randrange(254,310)
     elif classification =='interest':
         id = random.randrange(311,345)
-    elif classification =='love':
+    elif classification =='future':
         id = random.randrange(346,389)
     elif classification =='kidney':
         id = random.randrange(390,521)
 
     articleContent = {}
     title = {}
-	#articleContent.clear()
     title['type'] = classification
-
 
     query = """select m.main_quest
                from   psychological_test_all.fb_main_question as m
                where classification = '%s' and m.id = '%d'
             """ % (classification,id)
-
     cursor.execute(query)
 
     main = {}
@@ -83,9 +75,9 @@ def fn(request):
                 """ % (int(a[j]))
 
         cursor.execute(query)
-        c = cursor.fetchall()[0]
+        c = cursor.fetchall()
 
-        q['Qtitle']=c[0]
+        q['Qtitle']=c[0][0]
         query = """select  o.option
                    from   psy.fb_sub_question as s,psy.fb_option as o
                    where o.sub_question_id = s.id and s.id = '%d'
@@ -110,6 +102,5 @@ def fn(request):
     data['answer']=ans['answer']
     data['question']=question['question']
     send=json.dumps(data,indent=4)
-
 
     return HttpResponse(send)
